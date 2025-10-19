@@ -1,0 +1,165 @@
+{
+  "overall_summary": {
+    "total_clashes_analyzed": 9,
+    "changes_breakdown": {
+      "resolved": 4,
+      "modified": 2,
+      "new": 3
+    },
+    "executive_summary": "There are nine clash issues reviewed in this coordination cycle. Four have been resolved — one linked to an open RFI nearing its due date (Oct 29, 2025), one linked to a $100k Change Order, and another tied to a draft Mechanical Inspection form requiring completion. Two issues remain modified with open RFIs (one due Nov 3, 2025) or model updates awaiting review. Three new clashes were detected without supporting RFIs or forms, suggesting potential new interferences introduced in the latest model update. Immediate actions: follow up on the two RFIs before their due dates, ensure the Mechanical Inspection form is finalized, and confirm approval of the Change Order. Review the three new clashes in the next coordination meeting to determine if they persist after the next model sync."
+  },
+  "clashes": [
+    {
+      "issue_id": "160e014e-b9b8-4c22-b38e-1821dcab7737",
+      "group_id": "dfd28822-b8ef-40df-aa45-83038c38efff",
+      "change_type": "resolved",
+      "created_on": "2025-10-15T01:18:43.676884+00:00",
+      "counts": { "total": 0 },
+      "related_items": [
+        {
+          "type": "RFI",
+          "Title": "HeatRecoveryUnit [1467246] and K-Series Bar Joist-Angle Web [799315] (Issue #3)",
+          "Question": "1 clash between HeatRecoveryUnit [1467246] in Snowdon Towers Sample HVAC.rvt - 3D HVAC Layout and Snowdon Towers Sample Structural.rvt - Structure Only (Follow up to Issue #3)",
+          "Due Date": "Oct 29, 2025",
+          "Link": "https://acc.autodesk.com/build/rfis/projects/bc780b45-d06e-44ae-96de-d62333830e14?preview=96ddd7c7-a96b-42d8-8965-08b1b9a8996b"
+        }
+      ],
+      "issue_link": "https://acc.autodesk.com/build/issues/projects/bc780b45-d06e-44ae-96de-d62333830e14/issues?issueId=160e014e-b9b8-4c22-b38e-1821dcab7737",
+      "screenshot": "cb9c4342-958b-4c6c-91a1-6df96cb7d7c9.jpg",
+      "notes": {
+        "what_between": "Heat Recovery Unit [1467246] and K-Series Bar Joist-Angle Web [799315].",
+        "kind_of_change": "Resolved clash — RFI was created to clarify design coordination between mechanical and structural teams.",
+        "downstream_impact": "RFI response or closure should confirm that the physical conflict has been eliminated. Due date (Oct 29, 2025) is approaching — follow-up recommended to ensure the RFI is closed and design documentation is updated."
+      },
+      "summary": "This clash has been marked resolved. It had an associated RFI that is still open with a due date near Oct 29, 2025 — worth checking that the RFI is closed and the design fix has been implemented."
+    },
+    {
+      "issue_id": "188621a7-b30a-4863-834b-6e5407420b06",
+      "group_id": "948adbf9-bf2f-41cc-8e0c-f38778f6654a",
+      "change_type": "new",
+      "created_on": "2025-10-15T01:26:02.653966+00:00",
+      "counts": { "new": 1, "total": 1 },
+      "notes": {
+        "what_between": "No linked documentation provided — likely a new interference introduced after model update.",
+        "kind_of_change": "New clash detected in the latest coordination run.",
+        "downstream_impact": "Needs triage and potential RFI creation if persistent after next coordination cycle."
+      },
+      "summary": "1 new clash detected with no existing RFI or form. Review required to determine if design update introduced the interference."
+    },
+    {
+      "issue_id": "b665521a-51cd-422c-8907-cad5df0f27b6",
+      "group_id": "5d7d46e5-a2f6-4571-92a5-7e88c0ff0b3c",
+      "change_type": "resolved",
+      "counts": { "total": 0 },
+      "related_items": [
+        {
+          "Type": "Change Order",
+          "Name": "Reinstallation of Mech Level 2",
+          "Description": "Clash may result in abortive work to HVAC R US",
+          "Estimated Cost": 100000,
+		  "Link": "https://acc.autodesk.com/cost/changeorder/projects/bc780b45-d06e-44ae-96de-d62333830e14/changeorders/pco?preview=2acf3c2d-bb9f-453b-bad2-eb07560de14c"
+        }
+      ],
+      "notes": {
+        "what_between": "Mechanical works at Level 2 (HVAC zone).",
+        "kind_of_change": "Resolved — coordination led to a Change Order for reinstallation.",
+        "downstream_impact": "Ensure the Change Order 'Reinstallation of Mech Level 2' has been approved and reflected in schedule and cost tracking (~$100k impact)."
+      },
+      "summary": "Resolved clash with an associated $100k change order. Verify that reinstallation costs are approved and recorded to prevent scope discrepancies."
+    },
+    {
+      "issue_id": "6cfdebde-0d5d-43b8-9183-51efd3cf2ea0",
+      "group_id": "95eddc2a-bfec-420a-8f84-15c523e52b40",
+      "change_type": "modified",
+      "counts": { "modified": 3, "total": 3 },
+      "related_items": [
+        {
+          "type": "RFI",
+          "Title": "3 clashes across 3 Clash Groups (Issue #6)",
+          "Due Date": "Nov 3, 2025",
+          "Link": "https://acc.autodesk.com/build/rfis/projects/bc780b45-d06e-44ae-96de-d62333830e14?preview=5483aaed-febd-4f0f-906e-61a1b081b759"
+        }
+      ],
+      "notes": {
+        "what_between": "Round ductwork and structural elements across three clash groups.",
+        "kind_of_change": "Modified — geometry or routing updated, but still partially clashing.",
+        "downstream_impact": "Linked RFI due Nov 3, 2025 requests design decision on whether HVAC or structure will shift. Follow up required if no RFI response logged before due date."
+      },
+      "summary": "Three modified clashes remain with active RFI due Nov 3, 2025. Coordination meeting should review if RFI responses are complete and if rerouting is planned."
+    },
+    {
+      "issue_id": "a89a4e7e-7d68-464c-b457-41864febc4f9",
+      "group_id": "ff124496-3162-4a0a-981b-1011941afcea",
+      "change_type": "modified",
+      "counts": { "modified": 2, "total": 2 },
+      "notes": {
+        "what_between": "Clash details not linked to documentation — model shows two geometry changes.",
+        "kind_of_change": "Modified — slight position or tolerance updates.",
+        "downstream_impact": "Should be reviewed in next coordination meeting; consider if additional documentation or RFIs are required."
+      },
+      "summary": "Two clashes modified but still active. No linked documentation — worth checking whether updates are reducing or worsening overlap."
+    },
+    {
+      "issue_id": "9d2fd7e7-4326-40f7-be70-62f81faa6ce7",
+      "group_id": "5dfb8ec7-7795-4286-8cd8-7ec0caf5a2fa",
+      "change_type": "new",
+      "counts": { "new": 1, "total": 1 },
+      "notes": {
+        "what_between": "No supporting linked items. Likely new interference from model coordination update.",
+        "kind_of_change": "New clash found in recent test.",
+        "downstream_impact": "Minor — monitor next run to confirm if this persists."
+      },
+      "summary": "Single new clash detected without any linked documentation. Low risk but should be verified during the next model review."
+    },
+    {
+      "issue_id": "93febfc0-c6a5-4df7-b91b-d76949797cf5",
+      "group_id": "8c2d744c-f6b1-4d83-bd27-8080b957a0c6",
+      "change_type": "new",
+      "counts": { "new": 3, "total": 3 },
+      "notes": {
+        "what_between": "Three new clashes detected; no related documents or RFIs found.",
+        "kind_of_change": "New — recently introduced after model updates.",
+        "downstream_impact": "Check if new model version added geometry not previously coordinated."
+      },
+      "summary": "Three new clashes detected with no documentation links — suggest reviewing with latest model update to confirm cause."
+    },
+    {
+      "issue_id": "80d2124b-d069-4fc2-980c-fee7c0f4aa41",
+      "group_id": "6e3e2b74-8568-4e3e-ae45-21dc446fe65f",
+      "change_type": "resolved",
+      "counts": { "total": 0 },
+      "notes": {
+        "what_between": "No downstream records attached — resolved automatically or via model adjustment.",
+        "kind_of_change": "Resolved — likely design cleanup or coordination fix.",
+        "downstream_impact": "No follow-up required unless issue reappears."
+      },
+      "summary": "Clash marked resolved with no linked documentation — assumed fixed in design model."
+    },
+    {
+      "issue_id": "3b92f8ab-005f-4c6d-b235-baa5d24eaa06",
+      "group_id": "b9681622-10bb-4237-beef-22b6dfd07146",
+      "change_type": "resolved",
+      "counts": { "total": 0 },
+      "related_items": [
+        {
+          "Type": "Form",
+          "Name": "Mechanical Inspection",
+          "Status": "draft",
+          "Form Date": "2025-10-15",
+          "Link": "https://acc.autodesk.com/build/forms/projects/bc780b45-d06e-44ae-96de-d62333830e14/field-reports/7e738030-565b-4475-8eb6-104b324ee877/reports/08c80ec0-9056-4e87-826c-e3baeacc177e"
+        },
+        {
+          "Type": "Asset",
+          "Asset ID": "HeatRecoveryUnit [1467405]",
+          "Link": "https://acc.autodesk.com/build/assets/projects/bc780b45-d06e-44ae-96de-d62333830e14/assets?categoryId=3&assetId=f80f3d75-8e8b-4214-ba0e-159d9704eaa9"
+        }
+      ],
+      "notes": {
+        "what_between": "Mechanical inspection linked to Heat Recovery Unit [1467405].",
+        "kind_of_change": "Resolved — field inspection form created but still in draft.",
+        "downstream_impact": "Inspection form should be completed and approved before marking this asset as ready. Confirms final physical clearance achieved."
+      },
+      "summary": "Resolved clash with related mechanical inspection form still in draft. Follow up required to complete and sign off the inspection before closing out the issue."
+    }
+  ]
+}

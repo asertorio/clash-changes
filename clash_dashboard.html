@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ACC Clash Changes — Local Dashboard</title>
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --panel:#121821;
+      --muted:#8aa0b2;
+      --text:#e7eef5;
+      --brand:#4aa3ff;
+      --brand-2:#8b5cf6;
+      --ok:#22c55e;
+      --warn:#f59e0b;
+      --bad:#ef4444;
+      --chip:#1b2532;
+      --chip-active:#243244;
+      --border:#223042;
+      --card:#101720;
+      --card-2:#0e141c;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1000px 600px at 10% 10%, rgba(74,163,255,0.08), transparent 60%),
+                  radial-gradient(800px 400px at 90% 0%, rgba(139,92,246,0.07), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+    }
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container{ max-width:1200px; margin:0 auto; padding:24px; }
+    header{
+      display:flex; gap:16px; align-items:center; justify-content:space-between; margin-bottom:16px;
+    }
+    .title{
+      display:flex; align-items:center; gap:12px;
+    }
+    .logo{
+      width:40px; height:40px; border-radius:12px; background: linear-gradient(135deg,var(--brand),var(--brand-2));
+      display:grid; place-items:center; font-weight:700; color:#fff; box-shadow: 0 10px 30px rgba(74,163,255,.25);
+    }
+    .subtitle{ color:var(--muted); font-size:14px; }
+
+    .toolbar{
+      display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:flex-end;
+    }
+    .btn{
+      background: linear-gradient(180deg, #1a2432, #121a25);
+      border:1px solid var(--border);
+      color: var(--text);
+      padding:10px 14px; border-radius:12px; cursor:pointer; font-weight:600;
+    }
+    .btn:hover{ background:#1a2432; }
+    .btn.primary{ background: linear-gradient(180deg, #2a3b54, #1a2a3f); border-color:#2d4a6d; }
+    .btn.ghost{ background:transparent; border-color:transparent; }
+    .file-input{ display:none; }
+
+    .chip-row{ display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 0; }
+    .chip{
+      padding:8px 12px; border-radius:999px; background:var(--chip); border:1px solid var(--border); color:var(--text);
+      cursor:pointer; font-size:13px;
+    }
+    .chip[data-active="true"]{ background:var(--chip-active); border-color:#30465f; }
+    .chip .dot{ width:8px; height:8px; display:inline-block; border-radius:50%; margin-right:6px; vertical-align:baseline; }
+    .dot.ok{ background:var(--ok); } .dot.warn{ background:var(--warn);} .dot.bad{ background:var(--bad);}
+    .dot.info{ background:var(--brand); }
+
+    .grid{
+      display:grid; grid-template-columns: 1.1fr 2fr; gap:16px; align-items:start;
+    }
+    @media (max-width: 980px){ .grid{ grid-template-columns: 1fr; } }
+
+    .card{
+      background: linear-gradient(180deg, var(--card), var(--card-2));
+      border:1px solid var(--border); border-radius:16px; padding:16px;
+      box-shadow: 0 10px 35px rgba(0,0,0,.25);
+    }
+
+    .stats{ display:grid; grid-template-columns: repeat(4,1fr); gap:12px; }
+    @media (max-width: 800px){ .stats{ grid-template-columns: repeat(2,1fr);} }
+    .stat{ padding:14px; border-radius:14px; background: #0d1420; border:1px solid var(--border); }
+    .stat h3{ margin:0 0 6px; font-size:13px; color:var(--muted); font-weight:600; letter-spacing:.3px;}
+    .stat .num{ font-size:26px; font-weight:800; }
+    .stat .trend{ font-size:12px; color:var(--muted); }
+
+    .summary p{ margin:0; color:var(--muted); line-height:1.5; }
+
+    .searchbar{
+      display:flex; gap:10px; margin-top:12px;
+    }
+    .input{
+      flex:1; background:#0e1520; color:var(--text); border:1px solid var(--border); border-radius:12px; padding:10px 12px;
+    }
+    .select{ background:#0e1520; color:var(--text); border:1px solid var(--border); border-radius:12px; padding:10px 12px; }
+
+    .table{
+      width:100%; border-collapse:separate; border-spacing:0 8px; margin-top:6px;
+    }
+    .table thead th{
+      text-align:left; font-size:12px; color:var(--muted); font-weight:700; padding:0 12px 6px;
+    }
+    .row{
+      background:#0e151f; border:1px solid var(--border); border-radius:12px; overflow:hidden;
+    }
+    .row:hover{ border-color:#355274; }
+    .row td{ padding:12px; font-size:14px; vertical-align:top; }
+    .badge{ display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; font-weight:700; font-size:12px; letter-spacing:.3px; text-transform:uppercase; }
+    .badge.resolved{ background: rgba(34,197,94,.12); color:#a8f5c5; border:1px solid rgba(34,197,94,.3); }
+    .badge.modified{ background: rgba(245,158,11,.12); color:#ffd696; border:1px solid rgba(245,158,11,.35); }
+    .badge.new{ background: rgba(74,163,255,.12); color:#bfe0ff; border:1px solid rgba(74,163,255,.35); }
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; color:#b7c7d6; }
+
+    .detail{
+      position:sticky; top:16px;
+    }
+    .detail h3{ margin:0; font-size:18px; }
+    .kv{ display:grid; grid-template-columns:120px 1fr; gap:8px; font-size:13px; color:var(--muted); margin-top:10px; }
+    .kv div{ padding:4px 0; }
+    .panel{
+      margin-top:12px; border-top:1px solid var(--border); padding-top:12px;
+    }
+    .rel-item{
+      border:1px solid var(--border); border-radius:12px; padding:10px; margin-bottom:8px; background:#0c131d;
+    }
+    .rel-item h4{ margin:0 0 4px; font-size:14px; }
+    .rel-item p{ margin:4px 0; font-size:13px; color:var(--muted); }
+    .img-wrap{
+      margin-top:10px; border:1px solid var(--border); border-radius:12px; overflow:hidden; background:#0a0f16;
+    }
+    .img-wrap img{ width:100%; display:block; }
+    .muted{ color:var(--muted); }
+    .empty{
+      display:grid; place-items:center; padding:24px; color:var(--muted); border:1px dashed var(--border); border-radius:12px; background:#0b121b;
+    }
+    .footer{ margin-top:24px; font-size:12px; color:var(--muted); display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+    .pill{ padding:4px 8px; border-radius:999px; border:1px solid var(--border); background:#0b121b; }
+
+    /* modal */
+    .modal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; background: rgba(0,0,0,.6); z-index:50; }
+    .modal[open]{ display:flex; }
+    .modal-card{ width:min(96vw, 1100px); max-height:90vh; overflow:auto; background: #0b121b; border:1px solid var(--border); border-radius:16px; }
+    .modal-head{ display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-bottom:1px solid var(--border); }
+    .modal-body{ padding:16px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="title">
+        <div class="logo">AC</div>
+        <div>
+          <div style="font-size:20px; font-weight:800; letter-spacing:.2px;">ACC Clash Changes — Local Dashboard</div>
+          <div class="subtitle">Load <code>clashes_update_summary.json</code> or drop a file. Screenshots should sit in the same folder.</div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <button class="btn" id="btn-try-load">Auto‑load JSON</button>
+        <label class="btn primary" for="file">Upload JSON</label>
+        <input id="file" type="file" accept=".json,application/json" class="file-input" />
+        <button class="btn ghost" id="btn-print">Print / Save PDF</button>
+      </div>
+    </header>
+
+    <div class="card">
+      <div class="stats" id="stats">
+        <div class="stat">
+          <h3>Total clashes analysed</h3>
+          <div class="num" id="stat-total">—</div>
+          <div class="trend muted" id="stat-range">Awaiting data…</div>
+        </div>
+        <div class="stat">
+          <h3>Resolved</h3>
+          <div class="num" id="stat-resolved">—</div>
+          <div class="trend">✅ No follow‑up expected</div>
+        </div>
+        <div class="stat">
+          <h3>Modified</h3>
+          <div class="num" id="stat-modified">—</div>
+          <div class="trend">🛠 Review in next meeting</div>
+        </div>
+        <div class="stat">
+          <h3>New</h3>
+          <div class="num" id="stat-new">—</div>
+          <div class="trend">🧭 Triage & document</div>
+        </div>
+      </div>
+      <div class="panel summary">
+        <p id="exec-summary" class="muted">Executive summary will appear here after loading your file.</p>
+      </div>
+      <div class="chip-row" id="chips">
+        <div class="chip" data-filter="all" data-active="true"><span class="dot info"></span>All</div>
+        <div class="chip" data-filter="resolved"><span class="dot ok"></span>Resolved</div>
+        <div class="chip" data-filter="modified"><span class="dot warn"></span>Modified</div>
+        <div class="chip" data-filter="new"><span class="dot info"></span>New</div>
+      </div>
+      <div class="searchbar">
+        <input id="search" class="input" placeholder="Search by issue ID, summary, notes, or related item titles…" />
+        <select id="sort" class="select">
+          <option value="created_on_desc">Newest first</option>
+          <option value="created_on_asc">Oldest first</option>
+          <option value="change_type">Change type</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-top:16px;">
+      <div class="card">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Change</th>
+              <th>Issue</th>
+              <th>Counts</th>
+              <th>Summary</th>
+            </tr>
+          </thead>
+          <tbody id="rows">
+            <tr class="row"><td colspan="4"><div class="empty">Load a JSON file to see clashes.</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card detail" id="detail-card">
+        <div id="detail-empty" class="empty">Select a row to see details, related items, and screenshot.</div>
+        <div id="detail" style="display:none;">
+          <h3 id="d-title">Clash details</h3>
+          <div class="kv">
+            <div>Issue ID</div><div class="mono" id="d-issue"></div>
+            <div>Change</div><div id="d-change"></div>
+            <div>Counts</div><div id="d-counts"></div>
+            <div>Issue Link</div><div id="d-link"></div>
+          </div>
+          <div class="panel">
+            <h4 style="margin:0 0 8px;">Notes</h4>
+            <div id="d-notes" class="muted"></div>
+          </div>
+          <div class="panel">
+            <h4 style="margin:0 0 8px;">Related items</h4>
+            <div id="d-related"></div>
+          </div>
+          <div class="panel">
+            <h4 style="margin:0 0 8px;">Screenshot</h4>
+            <div id="d-screenshot"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="pill">Runs fully local — no internet required after load</div>
+      <div>Tip: Place <code>clashes_update_summary.json</code> and all screenshot images in the same folder as this HTML.</div>
+    </div>
+  </div>
+
+  <dialog class="modal" id="imgModal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div style="font-weight:700">Screenshot</div>
+        <button class="btn" id="closeModal">Close</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </dialog>
+
+<script>
+(function(){
+  const el = (id)=>document.getElementById(id);
+
+  const state = {
+    raw: null,
+    filter: 'all',
+    search: '',
+    sort: 'created_on_desc',
+    selectedIndex: null,
+  };
+
+  // Base ACC issue URL builder
+  function issueUrl(issueId){
+    if(!issueId) return '';
+    const base = 'https://acc.autodesk.com/model/issues/projects/bc780b45-d06e-44ae-96de-d62333830e14/model-set/7ab872f6-7468-4bb5-a320-cc1c4b1fe455?issueId=';
+    return base + encodeURIComponent(issueId);
+  }
+
+  function fmtDate(s){
+    if(!s) return '—';
+    try{
+      const d = new Date(s);
+      if (isNaN(d)) return s;
+      return d.toLocaleString();
+    }catch(e){ return s; }
+  }
+
+  function badge(type){
+    const t = (type||'').toLowerCase();
+    const cls = t==='resolved'?'resolved': t==='modified'?'modified':'new';
+    return `<span class="badge ${cls}">${t||'—'}</span>`;
+  }
+
+  function countsText(c){
+    if(!c) return '—';
+    const bits = [];
+    if (typeof c.total === 'number') bits.push(`<strong>${c.total}</strong> total`);
+    if (typeof c.new === 'number') bits.push(`<strong>${c.new}</strong> new`);
+    if (typeof c.modified === 'number') bits.push(`<strong>${c.modified}</strong> modified`);
+    return bits.join(' · ') || '—';
+  }
+
+  function shortId(id){
+    if(!id) return '—';
+    return `${id.slice(0,8)}…${id.slice(-4)}`;
+  }
+
+  function updateStats(){
+    const s = state.raw?.overall_summary;
+    if(!s){ return; }
+    el('stat-total').textContent = s.total_clashes_analyzed ?? '—';
+    const b = s.changes_breakdown || {};
+    el('stat-resolved').textContent = b.resolved ?? '—';
+    el('stat-modified').textContent = b.modified ?? '—';
+    el('stat-new').textContent = b.new ?? '—';
+    el('exec-summary').textContent = s.executive_summary || '—';
+  }
+
+  function applyFilters(arr){
+    let out = [...arr];
+    if (state.filter !== 'all'){
+      out = out.filter(x => (x.change_type||'').toLowerCase() === state.filter);
+    }
+    if (state.search){
+      const q = state.search.toLowerCase();
+      out = out.filter(x => {
+        const hay = [
+          x.issue_id, x.change_type, x.summary,
+          JSON.stringify(x.notes||{}),
+          JSON.stringify(x.related_items||[])
+        ].join(' ').toLowerCase();
+        return hay.includes(q);
+      });
+    }
+    switch(state.sort){
+      case 'created_on_desc':
+        out.sort((a,b)=> new Date(b.created_on||0) - new Date(a.created_on||0)); break;
+      case 'created_on_asc':
+        out.sort((a,b)=> new Date(a.created_on||0) - new Date(b.created_on||0)); break;
+      case 'change_type':
+        const order = { resolved:0, modified:1, new:2 };
+        out.sort((a,b)=>(order[(a.change_type||'').toLowerCase()] ?? 9) - (order[(b.change_type||'').toLowerCase()] ?? 9));
+        break;
+    }
+    return out;
+  }
+
+  function renderRows(){
+    const tbody = el('rows');
+    tbody.innerHTML='';
+    const data = state.raw?.clashes || [];
+    const list = applyFilters(data);
+    if (!list.length){
+      tbody.innerHTML = `<tr class="row"><td colspan="4"><div class="empty">No results. Adjust filters or search.</div></td></tr>`;
+      renderDetail(null);
+      return;
+    }
+    list.forEach((row, idx) => {
+      const tr = document.createElement('tr');
+      tr.className = 'row';
+      tr.tabIndex = 0;
+      const url = issueUrl(row.issue_id);
+      const issueCell = url
+        ? `<a class="mono" href="${url}" target="_blank" rel="noreferrer">${shortId(row.issue_id)}</a>`
+        : `<div class="mono">${shortId(row.issue_id)}</div>`;
+      tr.innerHTML = `
+        <td>${badge(row.change_type)}</td>
+        <td>${issueCell}</td>
+        <td>${countsText(row.counts)}</td>
+        <td>${row.summary ? row.summary : '<span class="muted">—</span>'}</td>
+      `;
+      tr.addEventListener('click',()=>{
+        state.selectedIndex = data.indexOf(row); // index into original array
+        renderDetail(row);
+        [...tbody.children].forEach(r => r.style.outline='none');
+        tr.style.outline = '2px solid #375a7c';
+        tr.scrollIntoView({block:'nearest'});
+      });
+      tbody.appendChild(tr);
+    });
+
+    if (state.selectedIndex!=null){
+      const sel = state.raw.clashes[state.selectedIndex];
+      const stillVisible = list.includes(sel);
+      renderDetail(stillVisible ? sel : null);
+    }
+  }
+
+  function renderDetail(row){
+    const empty = el('detail-empty');
+    const wrap  = el('detail');
+    if(!row){
+      empty.style.display='grid'; wrap.style.display='none'; return;
+    }
+    empty.style.display='none'; wrap.style.display='block';
+    el('d-title').textContent = `Clash ${shortId(row.issue_id)} (${row.change_type||'—'})`;
+    el('d-issue').textContent = row.issue_id || '—';
+    el('d-change').innerHTML = badge(row.change_type);
+    el('d-counts').innerHTML = countsText(row.counts);
+
+    // Always build Issue Link from issue_id (or use provided link if present)
+    const href = row.issue_link || issueUrl(row.issue_id);
+    const link = href ? `<a href="${href}" target="_blank" rel="noreferrer">Open in ACC ↗</a>` : '<span class="muted">—</span>';
+    el('d-link').innerHTML = link;
+
+    // notes
+    const n = row.notes || {};
+    const noteHtml = Object.keys(n).length
+      ? `<ul style="margin:0; padding-left:18px;">
+          ${Object.entries(n).map(([k,v])=> `<li><strong>${k.replace(/_/g,' ')}:</strong> <span class="muted">${v}</span></li>`).join('')}
+        </ul>`
+      : '<div class="muted">—</div>';
+    el('d-notes').innerHTML = noteHtml;
+
+    // related
+    const rel = row.related_items || [];
+    const relHtml = rel.length ? rel.map((r,i)=>{
+      const entries = Object.entries(r).map(([k,v])=>{
+        const val = (typeof v === 'string' && v.startsWith('http'))
+          ? `<a href="${v}" target="_blank" rel="noreferrer">${v}</a>`
+          : v;
+        return `<p><strong>${k}:</strong> <span class="muted">${val ?? '—'}</span></p>`;
+      }).join('');
+      return `<div class="rel-item"><h4>#${i+1} ${r.type||r.Type||'Related'}</h4>${entries}</div>`;
+    }).join('') : '<div class="muted">No linked items.</div>';
+    el('d-related').innerHTML = relHtml;
+
+    // screenshot
+    const cont = el('d-screenshot');
+    cont.innerHTML='';
+    const file = row.screenshot;
+    if (file){
+      const w = document.createElement('div');
+      w.className='img-wrap';
+      w.innerHTML = `<img src="${file}" alt="Screenshot for ${shortId(row.issue_id)}" />`;
+      w.addEventListener('click',()=> openImageModal(file));
+      cont.appendChild(w);
+    } else {
+      cont.innerHTML = '<div class="muted">No screenshot filename in data.</div>';
+    }
+  }
+
+  function openImageModal(src){
+    const modal = el('imgModal');
+    el('modalBody').innerHTML = `<img src="${src}" style="max-width:100%; height:auto; display:block; margin:0 auto;" />`;
+    modal.setAttribute('open','');
+  }
+  el('closeModal').addEventListener('click',()=> el('imgModal').removeAttribute('open'));
+
+  // interactions
+  document.querySelectorAll('.chip').forEach(c => {
+    c.addEventListener('click', () => {
+      document.querySelectorAll('.chip').forEach(x=>x.dataset.active='false');
+      c.dataset.active='true';
+      state.filter = c.dataset.filter;
+      renderRows();
+    });
+  });
+  el('search').addEventListener('input', e => { state.search = e.target.value.trim(); renderRows(); });
+  el('sort').addEventListener('change', e => { state.sort = e.target.value; renderRows(); });
+  el('btn-print').addEventListener('click', ()=> window.print());
+
+  // File upload
+  const fileInput = el('file');
+  fileInput.addEventListener('change', async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const txt = await file.text();
+    loadJsonText(txt);
+  });
+
+  // Drag & drop
+  document.addEventListener('dragover', e => { e.preventDefault(); });
+  document.addEventListener('drop', async e => {
+    e.preventDefault();
+    const file = e.dataTransfer?.files?.[0];
+    if(file){
+      const txt = await file.text();
+      loadJsonText(txt);
+    }
+  });
+
+  // Auto load attempt
+  el('btn-try-load').addEventListener('click', ()=> tryAutoLoad());
+  async function tryAutoLoad(){
+    try{
+      const res = await fetch('clashes_update_summary.json', {cache:'no-store'});
+      if(!res.ok) throw new Error('Not found');
+      const json = await res.text();
+      loadJsonText(json);
+    }catch(err){
+      alert('Could not auto‑load clashes_update_summary.json from the same folder.\n\nPlace it next to this HTML or upload it manually.');
+    }
+  }
+
+  // Core loader
+  function loadJsonText(text){
+    try{
+      const data = JSON.parse(text);
+      state.raw = data;
+      updateStats();
+      renderRows();
+      if ((data.clashes||[]).length){
+        state.selectedIndex = 0;
+        renderDetail(data.clashes[0]);
+      }
+      const dates = (data.clashes||[]).map(x => new Date(x.created_on||0)).filter(d => !isNaN(d));
+      if (dates.length){
+        const min = new Date(Math.min.apply(null, dates));
+        const max = new Date(Math.max.apply(null, dates));
+        el('stat-range').textContent = `${min.toLocaleDateString()} → ${max.toLocaleDateString()}`;
+      } else {
+        el('stat-range').textContent = '—';
+      }
+    }catch(e){
+      console.error(e);
+      alert('Failed to parse JSON. Please check the file contents.');
+    }
+  }
+})();
+</script>
+</body>
+</html>
