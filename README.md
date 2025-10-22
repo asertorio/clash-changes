@@ -2,6 +2,10 @@
 
 A modern web-based dashboard for reviewing and analyzing clash detection changes in Autodesk Construction Cloud (ACC) projects. This tool provides an intuitive interface for tracking resolved, modified, and new clashes, along with their related project documentation.
 
+❗**Note** - This dashboard uses a single monolithic HTML file containing all HTML, CSS, and JavaScript for simplicity. This is not considered best practice for web development, it was chosen to keep the end-user experience as simple as possible.
+
+For production applications or larger projects, consider splitting this into separate HTML, CSS, and JavaScript files.
+
 ## Features
 
 ### 📊 Dashboard Views
