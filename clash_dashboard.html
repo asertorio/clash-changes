@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ACC Clash Changes — Local Dashboard</title>
+  <title>ACC Clash Changes</title>
   <style>
     :root{
       --bg:#0b0f14;
@@ -81,6 +81,7 @@
     }
     .chip[data-active="true"]{ background:var(--chip-active); border-color:#30465f; }
     .chip .dot{ width:8px; height:8px; display:inline-block; border-radius:50%; margin-right:6px; vertical-align:baseline; }
+    .dot{ width:8px; height:8px; display:inline-block; border-radius:50%; vertical-align:middle; }
     .dot.ok{ background:var(--ok); } .dot.warn{ background:var(--warn);} .dot.bad{ background:var(--bad);}
     .dot.info{ background:var(--brand); }
 
@@ -202,6 +203,287 @@
     body[data-theme="light"] .row:hover{ border-color:rgba(37,99,235,0.5); }
     body[data-theme="light"] .empty{ border-style:solid; }
     body[data-theme="light"] .modal{ background: rgba(15,23,42,0.45); }
+    
+    /* Light mode badge improvements */
+    body[data-theme="light"] .badge.resolved{ background: rgba(34,197,94,.20); color:#15803d; border:1px solid rgba(34,197,94,.5); }
+    body[data-theme="light"] .badge.modified{ background: rgba(245,158,11,.25); color:#b45309; border:1px solid rgba(245,158,11,.6); }
+    body[data-theme="light"] .badge.new{ background: rgba(37,99,235,.20); color:#1e40af; border:1px solid rgba(37,99,235,.5); }
+
+    /* Apple Glass UI Theme */
+    @supports (backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px)) {
+      body[data-theme="glass"]{
+        --bg:#e8ecf2;
+        --bg-gradient: radial-gradient(1200px 700px at 20% 15%, rgba(120,170,255,0.15), transparent 70%),
+                        radial-gradient(900px 500px at 80% 10%, rgba(200,180,255,0.12), transparent 75%),
+                        linear-gradient(180deg, #f0f4f8, #e0e8f0);
+        --panel:rgba(255,255,255,0.65);
+        --muted:#5a6c7d;
+        --text:#1a2332;
+        --brand:#3a7cff;
+        --brand-2:#8b6df5;
+        --chip:rgba(255,255,255,0.60);
+        --chip-active:rgba(148,186,255,0.35);
+        --border:rgba(200,210,225,0.45);
+        --card:rgba(255,255,255,0.55);
+        --card-2:rgba(245,250,255,0.45);
+        --surface:rgba(250,252,255,0.60);
+        --input-bg:rgba(255,255,255,0.70);
+        --row-bg:rgba(255,255,255,0.60);
+        --rel-bg:rgba(252,254,255,0.65);
+        --empty-bg:rgba(245,250,255,0.50);
+        --outline:#5a9aff;
+        --modal-bg:rgba(255,255,255,0.75);
+        --shadow:0 8px 32px rgba(100,120,150,0.12), 0 2px 8px rgba(100,120,150,0.08);
+        --btn-bg:rgba(255,255,255,0.70);
+        --btn-primary-bg:linear-gradient(180deg, rgba(90,154,255,0.90), rgba(58,124,255,0.92));
+        --btn-hover:rgba(245,248,252,0.85);
+        --footer-pill-bg:rgba(245,250,255,0.60);
+      }
+
+      /* Frosted glass effect for glass theme */
+      body[data-theme="glass"] .card,
+      body[data-theme="glass"] .view-tabs,
+      body[data-theme="glass"] .modal-card{
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        box-shadow: 0 8px 32px rgba(100,120,150,0.15), 
+                    0 1px 4px rgba(100,120,150,0.10),
+                    inset 0 1px 0 rgba(255,255,255,0.8);
+      }
+
+      body[data-theme="glass"] .stat,
+      body[data-theme="glass"] .chip,
+      body[data-theme="glass"] .input,
+      body[data-theme="glass"] .select,
+      body[data-theme="glass"] .btn{
+        backdrop-filter: blur(12px) saturate(160%);
+        -webkit-backdrop-filter: blur(12px) saturate(160%);
+        box-shadow: 0 2px 8px rgba(100,120,150,0.08),
+                    inset 0 1px 0 rgba(255,255,255,0.7);
+      }
+
+      body[data-theme="glass"] .row,
+      body[data-theme="glass"] .rel-item,
+      body[data-theme="glass"] .related-item-row{
+        backdrop-filter: blur(10px) saturate(150%);
+        -webkit-backdrop-filter: blur(10px) saturate(150%);
+        box-shadow: 0 2px 12px rgba(100,120,150,0.06),
+                    inset 0 0.5px 0 rgba(255,255,255,0.6);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      body[data-theme="glass"] .row:hover,
+      body[data-theme="glass"] .related-item-row:hover{
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(100,120,150,0.15),
+                    inset 0 1px 0 rgba(255,255,255,0.8);
+        border-color:rgba(90,154,255,0.5);
+      }
+
+      body[data-theme="glass"] .modal{
+        background: rgba(200,210,220,0.30);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+
+      body[data-theme="glass"] .screenshot-tooltip{
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        background: rgba(255,255,255,0.85);
+        box-shadow: 0 12px 40px rgba(100,120,150,0.25),
+                    inset 0 1px 0 rgba(255,255,255,0.9);
+      }
+
+      body[data-theme="glass"] .logo{
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 4px 20px rgba(58,124,255,0.30),
+                    0 1px 4px rgba(58,124,255,0.20);
+      }
+
+      body[data-theme="glass"] .badge{
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+
+      body[data-theme="glass"] .badge.resolved{ 
+        background: rgba(52,211,153,0.25); 
+        color:#047857; 
+        border:1px solid rgba(52,211,153,0.40);
+        box-shadow: 0 2px 8px rgba(52,211,153,0.15);
+      }
+      body[data-theme="glass"] .badge.modified{ 
+        background: rgba(251,191,36,0.30); 
+        color:#b45309; 
+        border:1px solid rgba(251,191,36,0.45);
+        box-shadow: 0 2px 8px rgba(251,191,36,0.15);
+      }
+      body[data-theme="glass"] .badge.new{ 
+        background: rgba(96,165,250,0.30); 
+        color:#1e40af; 
+        border:1px solid rgba(96,165,250,0.45);
+        box-shadow: 0 2px 8px rgba(96,165,250,0.15);
+      }
+
+      body[data-theme="glass"] .btn{
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      body[data-theme="glass"] .btn:hover{
+        transform: translateY(-1px);
+        box-shadow: 0 4px 16px rgba(100,120,150,0.15),
+                    inset 0 1px 0 rgba(255,255,255,0.9);
+      }
+
+      body[data-theme="glass"] .btn.primary{
+        color: #ffffff;
+        border-color:rgba(58,124,255,0.3);
+        box-shadow: 0 4px 16px rgba(58,124,255,0.25),
+                    inset 0 1px 0 rgba(255,255,255,0.3);
+      }
+
+      body[data-theme="glass"] .btn.primary:hover{
+        box-shadow: 0 6px 24px rgba(58,124,255,0.35),
+                    inset 0 1px 0 rgba(255,255,255,0.4);
+      }
+
+      body[data-theme="glass"] .subtitle,
+      body[data-theme="glass"] .muted,
+      body[data-theme="glass"] .trend,
+      body[data-theme="glass"] .stat h3,
+      body[data-theme="glass"] .summary p{
+        color:var(--muted);
+      }
+
+      body[data-theme="glass"] .view-tab{
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      body[data-theme="glass"] .view-tab:hover{
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(100,120,150,0.12);
+      }
+
+      body[data-theme="glass"] .view-tab.active{
+        background:rgba(148,186,255,0.40);
+        border-color:rgba(90,154,255,0.50);
+        box-shadow: 0 2px 12px rgba(90,154,255,0.20),
+                    inset 0 1px 0 rgba(255,255,255,0.7);
+      }
+
+      body[data-theme="glass"] .chip[data-active="true"]{
+        background:rgba(148,186,255,0.40);
+        border-color:rgba(90,154,255,0.50);
+        box-shadow: 0 2px 12px rgba(90,154,255,0.15),
+                    inset 0 1px 0 rgba(255,255,255,0.6);
+      }
+
+      body[data-theme="glass"] .report-screenshot:hover{
+        transform:scale(1.02);
+        box-shadow: 0 8px 32px rgba(100,120,150,0.20);
+      }
+
+      body[data-theme="glass"] .empty{
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border-style:solid;
+      }
+
+      body[data-theme="glass"] .img-wrap{
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        box-shadow: 0 2px 12px rgba(100,120,150,0.08);
+      }
+    }
+
+    /* Tooltip for screenshot preview */
+    .screenshot-tooltip{
+      position: fixed;
+      display: none;
+      z-index: 100;
+      pointer-events: none;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 15px 40px rgba(0,0,0,.4);
+      max-width: 300px;
+      background: var(--panel);
+    }
+    .screenshot-tooltip img{
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .screenshot-tooltip.visible{
+      display: block;
+    }
+
+    /* View tabs */
+    .view-tabs{
+      display:flex; gap:8px; padding:12px 16px;
+      background: linear-gradient(180deg, var(--card), var(--card-2));
+      border:1px solid var(--border); border-radius:16px;
+      box-shadow: var(--shadow);
+      position: sticky; top: 16px; z-index: 10;
+    }
+    .view-tab{
+      padding:10px 16px; border-radius:12px; background:transparent; border:1px solid transparent; color:var(--muted);
+      cursor:pointer; font-weight:600; font-size:14px; transition: all .2s ease;
+    }
+    .view-tab:hover{ background:var(--chip); color:var(--text); border-color:var(--border); }
+    .view-tab.active{ background:var(--chip-active); color:var(--text); border-color:#30465f; }
+    
+    .view-content{ display:none; }
+    .view-content.active{ display:block; }
+
+    /* Related Items View */
+    .related-group{
+      border:1px solid var(--border); border-radius:12px; padding:16px; margin-bottom:12px; background:var(--rel-bg);
+    }
+    .related-group h3{ margin:0 0 12px; font-size:16px; display:flex; align-items:center; gap:10px; }
+    .related-group .type-badge{ 
+      padding:4px 10px; border-radius:6px; font-size:11px; font-weight:700; text-transform:uppercase;
+      background:var(--chip); border:1px solid var(--border);
+    }
+    .clash-ref{
+      padding:10px; margin:6px 0; border-left:3px solid var(--border); background:var(--row-bg); border-radius:4px;
+      font-size:13px;
+    }
+    .clash-ref:hover{ border-left-color:var(--brand); }
+    
+    .related-item-row{
+      background:var(--row-bg); border:1px solid var(--border); border-radius:12px; padding:12px; margin-bottom:8px;
+      cursor:pointer; transition: all .2s ease;
+    }
+    .related-item-row:hover{ border-color:#355274; }
+    .related-item-row h4{ margin:0 0 4px; font-size:14px; display:flex; align-items:center; gap:8px; }
+    .related-item-row p{ margin:4px 0 0; font-size:12px; color:var(--muted); }
+    .related-detail-content{ font-size:14px; line-height:1.6; }
+    .related-detail-content p{ margin:8px 0; }
+    .related-detail-content strong{ color:var(--text); }
+
+    /* Report View */
+    .report-section{
+      margin-bottom:32px; padding-bottom:24px; border-bottom:1px solid var(--border);
+    }
+    .report-section:last-child{ border-bottom:none; }
+    .report-section h2{ 
+      margin:0 0 16px; font-size:22px; display:flex; align-items:center; gap:12px;
+    }
+    .report-section h3{ margin:16px 0 8px; font-size:16px; color:var(--brand); }
+    .report-section p{ margin:8px 0; line-height:1.6; color:var(--muted); }
+    .report-section ul{ margin:8px 0; padding-left:24px; }
+    .report-section li{ margin:6px 0; line-height:1.6; color:var(--muted); }
+    .report-meta{
+      display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:8px;
+      background:var(--chip); border:1px solid var(--border); font-size:13px; margin:0 4px;
+    }
+    .report-screenshot{
+      margin:12px 0; border:1px solid var(--border); border-radius:12px; overflow:hidden;
+      max-width:400px; cursor:pointer; transition: transform .2s ease;
+    }
+    .report-screenshot:hover{ transform:scale(1.02); }
+    .report-screenshot img{ width:100%; display:block; }
   </style>
 </head>
 <body>
@@ -210,14 +492,13 @@
       <div class="title">
         <div class="logo">AC</div>
         <div>
-          <div style="font-size:20px; font-weight:800; letter-spacing:.2px;">ACC Clash Changes — Local Dashboard</div>
-          <div class="subtitle">Load <code>clashes_update_summary.json</code> or drop a file. Screenshots should sit in the same folder.</div>
+          <div style="font-size:20px; font-weight:800; letter-spacing:.2px;">ACC Clash Changes</div>
+          <div class="subtitle" id="subtitle">Review changes to clashes in the context of the related project information</div>
         </div>
       </div>
       <div class="toolbar">
         <button class="btn ghost" id="btn-theme" type="button">Switch to Light Mode</button>
-        <button class="btn" id="btn-try-load">Auto‑load JSON</button>
-        <label class="btn primary" for="file">Upload JSON</label>
+        <label class="btn primary" for="file">Update</label>
         <input id="file" type="file" accept=".json,application/json" class="file-input" />
         <button class="btn ghost" id="btn-print">Print / Save PDF</button>
       </div>
@@ -246,70 +527,122 @@
           <div class="trend">🧭 Triage & document</div>
         </div>
       </div>
-      <div class="panel summary">
-        <p id="exec-summary" class="muted">Executive summary will appear here after loading your file.</p>
-      </div>
-      <div class="chip-row" id="chips">
-        <div class="chip" data-filter="all" data-active="true"><span class="dot info"></span>All</div>
-        <div class="chip" data-filter="resolved"><span class="dot ok"></span>Resolved</div>
-        <div class="chip" data-filter="modified"><span class="dot warn"></span>Modified</div>
-        <div class="chip" data-filter="new"><span class="dot info"></span>New</div>
-      </div>
-      <div class="searchbar">
-        <input id="search" class="input" placeholder="Search by issue ID, summary, notes, or related item titles…" />
-        <select id="sort" class="select">
-          <option value="created_on_desc">Newest first</option>
-          <option value="created_on_asc">Oldest first</option>
-          <option value="change_type">Change type</option>
-        </select>
+    </div>
+
+    <div class="view-tabs" style="margin-top:16px;">
+      <button class="view-tab active" data-view="report">Report</button>
+      <button class="view-tab" data-view="clashes">Clashes</button>
+      <button class="view-tab" data-view="related">Related</button>
+    </div>
+
+    <!-- Report View -->
+    <div id="view-report" class="view-content active" style="margin-top:16px;">
+      <div class="card">
+        <div id="report-content">
+          <div class="empty">Load a JSON file to generate report.</div>
+        </div>
       </div>
     </div>
 
-    <div class="grid" style="margin-top:16px;">
-      <div class="card">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Change</th>
-              <th>Issue</th>
-              <th>Counts</th>
-              <th>Summary</th>
-            </tr>
-          </thead>
-          <tbody id="rows">
-            <tr class="row"><td colspan="4"><div class="empty">Load a JSON file to see clashes.</div></td></tr>
-          </tbody>
-        </table>
+    <!-- Clashes View (Original) -->
+    <div id="view-clashes" class="view-content" style="margin-top:16px;">
+      <div class="card" style="margin-bottom:16px;">
+        <div class="chip-row" id="chips">
+          <div class="chip" data-filter="all" data-active="true"><span class="dot info"></span>All</div>
+          <div class="chip" data-filter="resolved"><span class="dot ok"></span>Resolved</div>
+          <div class="chip" data-filter="modified"><span class="dot warn"></span>Modified</div>
+          <div class="chip" data-filter="new"><span class="dot info"></span>New</div>
+        </div>
+        <div class="searchbar">
+          <input id="search" class="input" placeholder="Search by issue ID, summary, notes, or related item titles…" />
+          <select id="sort" class="select">
+            <option value="created_on_desc">Newest first</option>
+            <option value="created_on_asc">Oldest first</option>
+            <option value="change_type">Change type</option>
+          </select>
+        </div>
       </div>
-      <div class="card detail" id="detail-card">
-        <div id="detail-empty" class="empty">Select a row to see details, related items, and screenshot.</div>
-        <div id="detail" style="display:none;">
-          <h3 id="d-title">Clash details</h3>
-          <div class="kv">
-            <div>Issue ID</div><div class="mono" id="d-issue"></div>
-            <div>Change</div><div id="d-change"></div>
-            <div>Counts</div><div id="d-counts"></div>
-            <div>Issue Link</div><div id="d-link"></div>
-          </div>
-          <div class="panel">
-            <h4 style="margin:0 0 8px;">Notes</h4>
-            <div id="d-notes" class="muted"></div>
-          </div>
-          <div class="panel">
-            <h4 style="margin:0 0 8px;">Related items</h4>
-            <div id="d-related"></div>
-          </div>
-          <div class="panel">
-            <h4 style="margin:0 0 8px;">Screenshot</h4>
-            <div id="d-screenshot"></div>
+
+      <div class="grid">
+        <div class="card">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Change</th>
+                <th>Issue</th>
+                <th>Clashes</th>
+                <th>Due Date</th>
+                <th>Summary</th>
+              </tr>
+            </thead>
+            <tbody id="rows">
+              <tr class="row"><td colspan="5"><div class="empty">Load a JSON file to see clashes.</div></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card detail" id="detail-card">
+          <div id="detail-empty" class="empty">Select a row to see details, related items, and screenshot.</div>
+          <div id="detail" style="display:none;">
+            <h3 id="d-title">Clash details</h3>
+            <div class="kv">
+              <div>Issue</div><div class="mono" id="d-issue"></div>
+              <div>Change</div><div id="d-change"></div>
+              <div>Counts</div><div id="d-counts"></div>
+              <div>Due Date</div><div id="d-duedate"></div>
+              <div>Issue Link</div><div id="d-link"></div>
+            </div>
+            <div class="panel">
+              <h4 style="margin:0 0 8px;">Notes</h4>
+              <div id="d-notes" class="muted"></div>
+            </div>
+            <div class="panel">
+              <h4 style="margin:0 0 8px;">Related items</h4>
+              <div id="d-related"></div>
+            </div>
+            <div class="panel">
+              <h4 style="margin:0 0 8px;">Screenshot</h4>
+              <div id="d-screenshot"></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="footer">
-      <div class="pill">Runs fully local — no internet required after load</div>
-      <div>Tip: Place <code>clashes_update_summary.json</code> and all screenshot images in the same folder as this HTML.</div>
+    <!-- Related Items View -->
+    <div id="view-related" class="view-content" style="margin-top:16px;">
+      <div class="card" style="margin-bottom:16px;">
+        <div class="chip-row" id="chips-related">
+          <div class="chip" data-filter-related="all" data-active="true"><span class="dot info"></span>All Types</div>
+          <div class="chip" data-filter-related="RFI"><span class="dot warn"></span>RFIs</div>
+          <div class="chip" data-filter-related="Change Order"><span class="dot bad"></span>Change Orders</div>
+          <div class="chip" data-filter-related="Form"><span class="dot ok"></span>Forms</div>
+          <div class="chip" data-filter-related="Asset"><span class="dot info"></span>Assets</div>
+          <div class="chip" data-filter-related="Issues Only"><span class="dot info"></span>Issues Only</div>
+        </div>
+        <div class="searchbar">
+          <input id="search-related" class="input" placeholder="Search related items by name or type…" />
+          <select id="sort-related" class="select">
+            <option value="clashes_desc">Most clashes first</option>
+            <option value="clashes_asc">Fewest clashes first</option>
+            <option value="type">By type</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <div id="related-items-list">
+            <div class="empty">Load a JSON file to see related items.</div>
+          </div>
+        </div>
+        <div class="card detail" id="related-detail-card">
+          <div id="related-detail-empty" class="empty">Select a related item to see details and associated clashes.</div>
+          <div id="related-detail" style="display:none;">
+            <h3 id="rd-title">Related Item Details</h3>
+            <div id="rd-content" class="related-detail-content"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -323,7 +656,14 @@
     </div>
   </dialog>
 
+  <div class="screenshot-tooltip" id="screenshotTooltip">
+    <img id="tooltipImg" src="" alt="Screenshot preview" />
+  </div>
+
 <script>
+// Default data file to load on startup
+const DEFAULT_DATA_FILE = 'clashes_update_summary.json';
+
 (function(){
   const el = (id)=>document.getElementById(id);
 
@@ -333,17 +673,50 @@
     search: '',
     sort: 'created_on_desc',
     selectedIndex: null,
+    currentView: 'report',
+    // Related items view state
+    relatedFilter: 'all',
+    relatedSearch: '',
+    relatedSort: 'clashes_desc',
+    selectedRelatedIndex: null,
   };
+
+  // View switching
+  document.querySelectorAll('.view-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const view = tab.dataset.view;
+      switchView(view);
+    });
+  });
+
+  function switchView(view) {
+    state.currentView = view;
+    // Update tabs
+    document.querySelectorAll('.view-tab').forEach(t => t.classList.remove('active'));
+    document.querySelector(`.view-tab[data-view="${view}"]`)?.classList.add('active');
+    // Update views
+    document.querySelectorAll('.view-content').forEach(v => v.classList.remove('active'));
+    document.getElementById(`view-${view}`)?.classList.add('active');
+    
+    // Render the appropriate view
+    if (view === 'related' && state.raw) {
+      renderRelatedItemsView();
+    } else if (view === 'report' && state.raw) {
+      renderReportView();
+    }
+  }
 
   const themeBtn = el('btn-theme');
   const THEME_KEY = 'dashboardTheme';
   const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   const savedTheme = localStorage.getItem(THEME_KEY);
-  const initialTheme = (savedTheme === 'light' || savedTheme === 'dark') ? savedTheme : (prefersDark ? 'dark' : 'light');
+  const initialTheme = (['light', 'dark', 'glass'].includes(savedTheme)) ? savedTheme : (prefersDark ? 'dark' : 'light');
   applyTheme(initialTheme);
 
   themeBtn?.addEventListener('click', () => {
-    const next = document.body.dataset.theme === 'light' ? 'dark' : 'light';
+    const current = document.body.dataset.theme || 'dark';
+    // Cycle through: dark -> light -> glass -> dark
+    const next = current === 'dark' ? 'light' : current === 'light' ? 'glass' : 'dark';
     applyTheme(next);
   });
 
@@ -351,8 +724,13 @@
     document.body.setAttribute('data-theme', theme);
     localStorage.setItem(THEME_KEY, theme);
     if(themeBtn){
-      themeBtn.textContent = theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode';
-      themeBtn.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
+      const labels = {
+        dark: '🌙 Dark',
+        light: '☀️ Light', 
+        glass: '✨ Glass'
+      };
+      themeBtn.textContent = `Theme: ${labels[theme] || labels.dark}`;
+      themeBtn.setAttribute('aria-label', `Current theme: ${theme}. Click to cycle themes.`);
     }
   }
 
@@ -380,16 +758,45 @@
 
   function countsText(c){
     if(!c) return '—';
-    const bits = [];
-    if (typeof c.total === 'number') bits.push(`<strong>${c.total}</strong> total`);
-    if (typeof c.new === 'number') bits.push(`<strong>${c.new}</strong> new`);
-    if (typeof c.modified === 'number') bits.push(`<strong>${c.modified}</strong> modified`);
-    return bits.join(' · ') || '—';
+    if (typeof c.total === 'number') {
+      // If total is 0 (e.g., resolved clash), still show 1 since we have a clash record
+      return c.total === 0 ? '1' : `${c.total}`;
+    }
+    return '—';
   }
 
   function shortId(id){
     if(!id) return '—';
     return `${id.slice(0,8)}…${id.slice(-4)}`;
+  }
+
+  function formatDueDate(dueDateStr){
+    if(!dueDateStr) return '<span class="muted">—</span>';
+    try{
+      const dueDate = new Date(dueDateStr);
+      if (isNaN(dueDate)) return '<span class="muted">—</span>';
+      
+      const now = new Date();
+      const isOverdue = dueDate < now;
+      const dateStr = dueDate.toLocaleDateString('en-AU');
+      
+      if (isOverdue) {
+        return `<span style="color:var(--bad); font-weight:600;">⚠ ${dateStr}</span>`;
+      } else {
+        return dateStr;
+      }
+    }catch(e){ 
+      return '<span class="muted">—</span>'; 
+    }
+  }
+
+  function getIssueNumber(clash, index) {
+    // First, check if Issue_number exists in the data
+    if (clash.Issue_number) {
+      return `#${clash.Issue_number}`;
+    }
+    // Fallback: use index + 1 as issue number
+    return `#${index + 1}`;
   }
 
   function updateStats(){
@@ -400,7 +807,6 @@
     el('stat-resolved').textContent = b.resolved ?? '—';
     el('stat-modified').textContent = b.modified ?? '—';
     el('stat-new').textContent = b.new ?? '—';
-    el('exec-summary').textContent = s.executive_summary || '—';
   }
 
   function applyFilters(arr){
@@ -432,13 +838,494 @@
     return out;
   }
 
+  // Tooltip functions for screenshot preview
+  function showTooltip(screenshotSrc, event) {
+    const tooltip = el('screenshotTooltip');
+    const img = el('tooltipImg');
+    img.src = screenshotSrc;
+    tooltip.classList.add('visible');
+    positionTooltip(event);
+  }
+
+  function positionTooltip(event) {
+    const tooltip = el('screenshotTooltip');
+    const offset = 15; // pixels away from cursor
+    const x = event.clientX + offset;
+    const y = event.clientY + offset;
+    
+    // Adjust position to keep tooltip on screen
+    const rect = tooltip.getBoundingClientRect();
+    let finalX = x;
+    let finalY = y;
+    
+    if (x + rect.width > window.innerWidth) {
+      finalX = event.clientX - rect.width - offset;
+    }
+    if (y + rect.height > window.innerHeight) {
+      finalY = event.clientY - rect.height - offset;
+    }
+    
+    tooltip.style.left = finalX + 'px';
+    tooltip.style.top = finalY + 'px';
+  }
+
+  function hideTooltip() {
+    const tooltip = el('screenshotTooltip');
+    tooltip.classList.remove('visible');
+  }
+
+  // Get color for related item type
+  function getTypeColor(type) {
+    const typeUpper = (type || '').toUpperCase();
+    if (typeUpper === 'RFI') return 'warn';
+    if (typeUpper === 'CHANGE ORDER') return 'bad';
+    if (typeUpper === 'FORM') return 'ok';
+    if (typeUpper === 'ASSET') return 'info';
+    if (typeUpper === 'ISSUES ONLY') return 'info';
+    return 'info';
+  }
+
+  // Related Items View - groups clashes by their related items
+  function buildRelatedItemsData() {
+    const data = state.raw?.clashes || [];
+    const relatedMap = new Map();
+    const noRelatedItems = { type: 'Issues Only', name: 'Issues Only', item: {}, clashes: [] };
+
+    data.forEach(clash => {
+      if (!clash.related_items || clash.related_items.length === 0) {
+        noRelatedItems.clashes.push(clash);
+      } else {
+        clash.related_items.forEach(item => {
+          const type = item.type || item.Type || 'Related Item';
+          const name = item.Name || item.Title || item['Asset ID'] || 'Unnamed';
+          const key = `${type}::${name}`;
+          
+          if (!relatedMap.has(key)) {
+            relatedMap.set(key, { type, name, item, clashes: [] });
+          }
+          relatedMap.get(key).clashes.push(clash);
+        });
+      }
+    });
+
+    const items = Array.from(relatedMap.values());
+    
+    // Add "Issues Only" at the bottom if there are any
+    if (noRelatedItems.clashes.length > 0) {
+      items.push(noRelatedItems);
+    }
+    
+    return items;
+  }
+
+  function applyRelatedFilters(arr) {
+    let out = [...arr];
+    
+    // Filter by type
+    if (state.relatedFilter !== 'all') {
+      out = out.filter(x => x.type === state.relatedFilter);
+    }
+    
+    // Search
+    if (state.relatedSearch) {
+      const q = state.relatedSearch.toLowerCase();
+      out = out.filter(x => {
+        const hay = [x.type, x.name, JSON.stringify(x.item)].join(' ').toLowerCase();
+        return hay.includes(q);
+      });
+    }
+    
+    // Sort - always keep "Issues Only" at the bottom
+    const issuesOnly = out.filter(x => x.type === 'Issues Only');
+    const others = out.filter(x => x.type !== 'Issues Only');
+    
+    switch(state.relatedSort) {
+      case 'clashes_desc':
+        others.sort((a, b) => b.clashes.length - a.clashes.length);
+        break;
+      case 'clashes_asc':
+        others.sort((a, b) => a.clashes.length - b.clashes.length);
+        break;
+      case 'type':
+        others.sort((a, b) => a.type.localeCompare(b.type) || a.name.localeCompare(b.name));
+        break;
+    }
+    
+    // Combine: sorted items first, then "Issues Only" at the bottom
+    return [...others, ...issuesOnly];
+  }
+
+  function renderRelatedItemsView() {
+    renderRelatedItemsList();
+  }
+
+  function renderRelatedItemsList() {
+    const container = el('related-items-list');
+    const data = state.raw?.clashes || [];
+    
+    if (!data.length) {
+      container.innerHTML = '<div class="empty">No clashes to display.</div>';
+      renderRelatedDetail(null);
+      return;
+    }
+
+    const allItems = buildRelatedItemsData();
+    const filteredItems = applyRelatedFilters(allItems);
+    
+    if (!filteredItems.length) {
+      container.innerHTML = '<div class="empty">No results. Adjust filters or search.</div>';
+      renderRelatedDetail(null);
+      return;
+    }
+
+    container.innerHTML = '';
+    
+    filteredItems.forEach((item, idx) => {
+      const div = document.createElement('div');
+      div.className = 'related-item-row';
+      
+      const colorClass = getTypeColor(item.type);
+      const typeBadge = `<span class="type-badge">${item.type}</span>`;
+      
+      // Count clashes by type
+      const resolvedCount = item.clashes.filter(c => c.change_type === 'resolved').length;
+      const modifiedCount = item.clashes.filter(c => c.change_type === 'modified').length;
+      const newCount = item.clashes.filter(c => c.change_type === 'new').length;
+      
+      // Build clash breakdown with colored badges (smaller version)
+      const smallBadge = (type) => {
+        const t = (type||'').toLowerCase();
+        const cls = t==='resolved'?'resolved': t==='modified'?'modified':'new';
+        return `<span class="badge ${cls}" style="font-size:9px; padding:4px 8px;">${t||'—'}</span>`;
+      };
+      
+      const breakdownParts = [];
+      if (resolvedCount > 0) breakdownParts.push(`${resolvedCount} ${smallBadge('resolved')}`);
+      if (modifiedCount > 0) breakdownParts.push(`${modifiedCount} ${smallBadge('modified')}`);
+      if (newCount > 0) breakdownParts.push(`${newCount} ${smallBadge('new')}`);
+      const clashBreakdown = breakdownParts.join(' ');
+      
+      div.innerHTML = `
+        <h4 style="display:flex; align-items:center; gap:8px;">
+          <span class="dot ${colorClass}"></span>
+          ${typeBadge}
+          ${item.type !== 'Issues Only' ? item.name : ''}
+        </h4>
+        <p style="margin-left:24px; color:var(--muted); font-size:13px; display:flex; align-items:center; gap:6px; flex-wrap:wrap;">${clashBreakdown}</p>
+      `;
+      
+      div.addEventListener('click', () => {
+        state.selectedRelatedIndex = allItems.indexOf(item);
+        renderRelatedDetail(item);
+        container.querySelectorAll('.related-item-row').forEach(r => r.style.outline='none');
+        div.style.outline = '2px solid var(--outline)';
+        div.scrollIntoView({block:'nearest'});
+      });
+      
+      container.appendChild(div);
+    });
+
+    // Auto-select first item if nothing selected
+    if (state.selectedRelatedIndex === null && filteredItems.length > 0) {
+      state.selectedRelatedIndex = allItems.indexOf(filteredItems[0]);
+      renderRelatedDetail(filteredItems[0]);
+    } else if (state.selectedRelatedIndex !== null) {
+      const sel = allItems[state.selectedRelatedIndex];
+      const stillVisible = filteredItems.includes(sel);
+      renderRelatedDetail(stillVisible ? sel : null);
+    }
+  }
+
+  function renderRelatedDetail(item) {
+    const empty = el('related-detail-empty');
+    const wrap = el('related-detail');
+    
+    if (!item) {
+      empty.style.display='grid';
+      wrap.style.display='none';
+      return;
+    }
+    
+    empty.style.display='none';
+    wrap.style.display='block';
+    
+    el('rd-title').innerHTML = `<span class="type-badge">${item.type}</span> ${item.name}`;
+    
+    const content = el('rd-content');
+    let html = '';
+    
+    // Item details
+    const itemDetails = Object.entries(item.item)
+      .filter(([k]) => k !== 'type' && k !== 'Type')
+      .map(([k, v]) => {
+        if (k === 'Link' && typeof v === 'string' && v.startsWith('http')) {
+          return `<p><strong>${k}:</strong> <a href="${v}" target="_blank" rel="noreferrer">Open in ACC ↗</a></p>`;
+        }
+        return `<p><strong>${k}:</strong> <span class="muted">${v ?? '—'}</span></p>`;
+      })
+      .join('');
+    
+    if (itemDetails) {
+      html += `<div style="margin-bottom:16px;">${itemDetails}</div>`;
+    }
+    
+    // Related clashes
+    html += `
+      <div class="panel">
+        <h4 style="margin:0 0 12px;">Related Clashes (${item.clashes.length})</h4>
+    `;
+    
+    item.clashes.forEach(clash => {
+      const changeColor = clash.change_type === 'resolved' ? 'ok' : clash.change_type === 'modified' ? 'warn' : 'info';
+      const issueLink = clash.issue_link || issueUrl(clash.issue_id);
+      
+      html += `
+        <div class="rel-item">
+          <h4 style="display:flex; align-items:center; gap:8px;">
+            <span class="dot ${changeColor}"></span>
+            ${badge(clash.change_type)}
+            <span class="mono">${shortId(clash.issue_id)}</span>
+          </h4>
+          ${clash.summary ? `<p>${clash.summary}</p>` : ''}
+          <p><strong>Counts:</strong> ${countsText(clash.counts)}</p>
+          ${clash.issue_duedate ? `<p><strong>Due Date:</strong> ${formatDueDate(clash.issue_duedate)}</p>` : ''}
+          ${issueLink ? `<p><a href="${issueLink}" target="_blank" rel="noreferrer">Open in ACC ↗</a></p>` : ''}
+          ${clash.screenshot ? `
+            <div class="img-wrap" style="margin-top:8px; cursor:pointer;" onclick="openImageModal('${clash.screenshot}')">
+              <img src="${clash.screenshot}" alt="Screenshot" />
+            </div>
+          ` : ''}
+        </div>
+      `;
+    });
+    
+    html += '</div>';
+    
+    content.innerHTML = html;
+  }
+
+  // Report View - narrative format report
+  function renderReportView() {
+    const container = el('report-content');
+    const data = state.raw?.clashes || [];
+    const summary = state.raw?.overall_summary;
+    
+    if (!data.length) {
+      container.innerHTML = '<div class="empty">No clashes to report.</div>';
+      return;
+    }
+
+    const resolved = data.filter(c => c.change_type === 'resolved');
+    const modified = data.filter(c => c.change_type === 'modified');
+    const newClashes = data.filter(c => c.change_type === 'new');
+
+    let html = `
+      <div class="report-section">
+        <h2>Executive Summary</h2>
+        <p>${summary?.executive_summary || 'No executive summary available.'}</p>
+      </div>
+    `;
+
+    // Resolved Section
+    if (resolved.length > 0) {
+      html += `
+        <div class="report-section">
+          <h2>${badge('resolved')} Resolved Clashes (${resolved.length})</h2>
+          <p>The following clashes have been successfully resolved during this coordination cycle. These items no longer present physical conflicts in the model, though some may require follow-up actions on related documentation.</p>
+      `;
+      
+      resolved.forEach((clash, idx) => {
+        const notes = clash.notes || {};
+        const relItems = clash.related_items || [];
+        
+        html += `
+          <h3>Resolved Clash ${idx + 1}</h3>
+          <p><strong>Status:</strong> ${badge('resolved')} 
+             <span class="report-meta">${countsText(clash.counts)} clash${clash.counts?.total !== 1 ? 'es' : ''}</span>
+             ${clash.issue_duedate ? `<span class="report-meta">Due: ${formatDueDate(clash.issue_duedate)}</span>` : ''}
+             ${clash.issue_link ? `<a href="${clash.issue_link}" target="_blank" rel="noreferrer" style="margin-left:8px;">Open in ACC ↗</a>` : ''}
+          </p>
+          ${clash.summary ? `<p>${clash.summary}</p>` : ''}
+        `;
+
+        if (Object.keys(notes).length > 0) {
+          html += '<p><strong>Analysis:</strong></p><ul>';
+          Object.entries(notes).forEach(([key, val]) => {
+            html += `<li><strong>${key.replace(/_/g, ' ')}:</strong> ${val}</li>`;
+          });
+          html += '</ul>';
+        }
+
+        if (relItems.length > 0) {
+          html += '<p><strong>Related Project Items:</strong></p><ul>';
+          relItems.forEach(item => {
+            const type = item.type || item.Type || 'Item';
+            const name = item.Name || item.Title || 'Unnamed';
+            const link = item.Link;
+            html += `<li><strong>${type}:</strong> ${name}`;
+            if (link) html += ` <a href="${link}" target="_blank" rel="noreferrer">Open in ACC ↗</a>`;
+            html += '</li>';
+          });
+          html += '</ul>';
+        }
+
+        if (clash.screenshot) {
+          html += `<div class="report-screenshot" onclick="openImageModal('${clash.screenshot}')">
+            <img src="${clash.screenshot}" alt="Screenshot for ${shortId(clash.issue_id)}" />
+          </div>`;
+        }
+      });
+
+      html += '</div>';
+    }
+
+    // Modified Section
+    if (modified.length > 0) {
+      html += `
+        <div class="report-section">
+          <h2>${badge('modified')} Modified Clashes (${modified.length})</h2>
+          <p>These clashes remain active but have undergone geometry or position changes since the last review. They require continued monitoring and coordination to ensure resolution in upcoming model updates.</p>
+      `;
+      
+      modified.forEach((clash, idx) => {
+        const notes = clash.notes || {};
+        const relItems = clash.related_items || [];
+        
+        html += `
+          <h3>Modified Clash ${idx + 1}</h3>
+          <p><strong>Status:</strong> ${badge('modified')} 
+             <span class="report-meta">${countsText(clash.counts)} clash${clash.counts?.total !== 1 ? 'es' : ''}</span>
+             ${clash.issue_duedate ? `<span class="report-meta">Due: ${formatDueDate(clash.issue_duedate)}</span>` : ''}
+             ${clash.issue_link ? `<a href="${clash.issue_link}" target="_blank" rel="noreferrer" style="margin-left:8px;">Open in ACC ↗</a>` : ''}
+          </p>
+          ${clash.summary ? `<p>${clash.summary}</p>` : ''}
+        `;
+
+        if (Object.keys(notes).length > 0) {
+          html += '<p><strong>Analysis:</strong></p><ul>';
+          Object.entries(notes).forEach(([key, val]) => {
+            html += `<li><strong>${key.replace(/_/g, ' ')}:</strong> ${val}</li>`;
+          });
+          html += '</ul>';
+        }
+
+        if (relItems.length > 0) {
+          html += '<p><strong>Related Project Items:</strong></p><ul>';
+          relItems.forEach(item => {
+            const type = item.type || item.Type || 'Item';
+            const name = item.Name || item.Title || 'Unnamed';
+            const link = item.Link;
+            html += `<li><strong>${type}:</strong> ${name}`;
+            if (link) html += ` <a href="${link}" target="_blank" rel="noreferrer">Open in ACC ↗</a>`;
+            html += '</li>';
+          });
+          html += '</ul>';
+        }
+
+        if (clash.screenshot) {
+          html += `<div class="report-screenshot" onclick="openImageModal('${clash.screenshot}')">
+            <img src="${clash.screenshot}" alt="Screenshot for ${shortId(clash.issue_id)}" />
+          </div>`;
+        }
+      });
+
+      html += '</div>';
+    }
+
+    // New Section
+    if (newClashes.length > 0) {
+      html += `
+        <div class="report-section">
+          <h2>${badge('new')} New Clashes (${newClashes.length})</h2>
+          <p>These clashes were newly detected in the latest coordination run. They represent potential new interferences that require immediate triage and documentation to determine if they persist or are artifacts of model updates.</p>
+      `;
+      
+      newClashes.forEach((clash, idx) => {
+        const notes = clash.notes || {};
+        const relItems = clash.related_items || [];
+        
+        html += `
+          <h3>New Clash ${idx + 1}</h3>
+          <p><strong>Status:</strong> ${badge('new')} 
+             <span class="report-meta">${countsText(clash.counts)} clash${clash.counts?.total !== 1 ? 'es' : ''}</span>
+             ${clash.issue_duedate ? `<span class="report-meta">Due: ${formatDueDate(clash.issue_duedate)}</span>` : ''}
+             ${clash.issue_link ? `<a href="${clash.issue_link}" target="_blank" rel="noreferrer" style="margin-left:8px;">Open in ACC ↗</a>` : ''}
+          </p>
+          ${clash.summary ? `<p>${clash.summary}</p>` : ''}
+        `;
+
+        if (Object.keys(notes).length > 0) {
+          html += '<p><strong>Analysis:</strong></p><ul>';
+          Object.entries(notes).forEach(([key, val]) => {
+            html += `<li><strong>${key.replace(/_/g, ' ')}:</strong> ${val}</li>`;
+          });
+          html += '</ul>';
+        }
+
+        if (relItems.length > 0) {
+          html += '<p><strong>Related Project Items:</strong></p><ul>';
+          relItems.forEach(item => {
+            const type = item.type || item.Type || 'Item';
+            const name = item.Name || item.Title || 'Unnamed';
+            const link = item.Link;
+            html += `<li><strong>${type}:</strong> ${name}`;
+            if (link) html += ` <a href="${link}" target="_blank" rel="noreferrer">Open in ACC ↗</a>`;
+            html += '</li>';
+          });
+          html += '</ul>';
+        } else {
+          html += '<p class="muted"><em>No related documentation found. Consider creating an RFI or documentation to track this clash.</em></p>';
+        }
+
+        if (clash.screenshot) {
+          html += `<div class="report-screenshot" onclick="openImageModal('${clash.screenshot}')">
+            <img src="${clash.screenshot}" alt="Screenshot for ${shortId(clash.issue_id)}" />
+          </div>`;
+        }
+      });
+
+      html += '</div>';
+    }
+
+    // Recommendations
+    html += `
+      <div class="report-section">
+        <h2>Recommendations & Next Steps</h2>
+        <ul>
+    `;
+
+    if (resolved.some(c => c.related_items?.some(ri => ri['Due Date']))) {
+      html += '<li>Follow up on all RFIs with approaching due dates to ensure responses are logged and design updates are implemented.</li>';
+    }
+    if (resolved.some(c => c.related_items?.some(ri => (ri.Type || ri.type) === 'Form' && ri.Status === 'draft'))) {
+      html += '<li>Complete and finalize all draft inspection forms before closing out resolved clashes.</li>';
+    }
+    if (resolved.some(c => c.related_items?.some(ri => (ri.Type || ri.type) === 'Change Order'))) {
+      html += '<li>Verify that all change orders have been approved and costs are reflected in project tracking systems.</li>';
+    }
+    if (modified.length > 0) {
+      html += `<li>Review all ${modified.length} modified clash(es) in the next coordination meeting to assess progress toward resolution.</li>`;
+    }
+    if (newClashes.length > 0) {
+      html += `<li>Triage all ${newClashes.length} new clash(es) to determine if they persist after the next model synchronization.</li>`;
+      html += '<li>Create RFIs or other documentation for persistent new clashes that require coordination decisions.</li>';
+    }
+
+    html += `
+        </ul>
+      </div>
+    `;
+
+    container.innerHTML = html;
+  }
+
   function renderRows(){
     const tbody = el('rows');
     tbody.innerHTML='';
     const data = state.raw?.clashes || [];
     const list = applyFilters(data);
     if (!list.length){
-      tbody.innerHTML = `<tr class="row"><td colspan="4"><div class="empty">No results. Adjust filters or search.</div></td></tr>`;
+      tbody.innerHTML = `<tr class="row"><td colspan="5"><div class="empty">No results. Adjust filters or search.</div></td></tr>`;
       renderDetail(null);
       return;
     }
@@ -446,15 +1333,18 @@
       const tr = document.createElement('tr');
       tr.className = 'row';
       tr.tabIndex = 0;
+      const dataIndex = data.indexOf(row);
+      const issueNum = getIssueNumber(row, dataIndex);
       const url = issueUrl(row.issue_id);
       const issueCell = url
-        ? `<a class="mono" href="${url}" target="_blank" rel="noreferrer">${shortId(row.issue_id)}</a>`
-        : `<div class="mono">${shortId(row.issue_id)}</div>`;
+        ? `<a class="mono" href="${url}" target="_blank" rel="noreferrer">${issueNum}</a>`
+        : `<div class="mono">${issueNum}</div>`;
       tr.innerHTML = `
         <td>${badge(row.change_type)}</td>
         <td>${issueCell}</td>
         <td>${countsText(row.counts)}</td>
-        <td>${row.summary ? row.summary : '<span class="muted">—</span>'}</td>
+        <td>${formatDueDate(row.issue_duedate)}</td>
+        <td>${row.short_summary ? row.short_summary : '<span class="muted">—</span>'}</td>
       `;
       tr.addEventListener('click',()=>{
         state.selectedIndex = data.indexOf(row); // index into original array
@@ -463,6 +1353,14 @@
         tr.style.outline = '2px solid var(--outline)';
         tr.scrollIntoView({block:'nearest'});
       });
+      
+      // Add hover event for screenshot tooltip
+      if (row.screenshot) {
+        tr.addEventListener('mouseenter', (e) => showTooltip(row.screenshot, e));
+        tr.addEventListener('mousemove', (e) => positionTooltip(e));
+        tr.addEventListener('mouseleave', hideTooltip);
+      }
+      
       tbody.appendChild(tr);
     });
 
@@ -480,10 +1378,13 @@
       empty.style.display='grid'; wrap.style.display='none'; return;
     }
     empty.style.display='none'; wrap.style.display='block';
-    el('d-title').textContent = `Clash ${shortId(row.issue_id)} (${row.change_type||'—'})`;
-    el('d-issue').textContent = row.issue_id || '—';
+    const dataIndex = state.raw?.clashes?.indexOf(row) ?? 0;
+    const issueNum = getIssueNumber(row, dataIndex);
+    el('d-title').textContent = `Clash ${issueNum} (${row.change_type||'—'})`;
+    el('d-issue').textContent = issueNum;
     el('d-change').innerHTML = badge(row.change_type);
     el('d-counts').innerHTML = countsText(row.counts);
+    el('d-duedate').innerHTML = formatDueDate(row.issue_duedate);
 
     // Always build Issue Link from issue_id (or use provided link if present)
     const href = row.issue_link || issueUrl(row.issue_id);
@@ -504,7 +1405,7 @@
     const relHtml = rel.length ? rel.map((r,i)=>{
       const entries = Object.entries(r).map(([k,v])=>{
         const val = (typeof v === 'string' && v.startsWith('http'))
-          ? `<a href="${v}" target="_blank" rel="noreferrer">${v}</a>`
+          ? `<a href="${v}" target="_blank" rel="noreferrer">Open in ACC ↗</a>`
           : v;
         return `<p><strong>${k}:</strong> <span class="muted">${val ?? '—'}</span></p>`;
       }).join('');
@@ -534,10 +1435,10 @@
   }
   el('closeModal').addEventListener('click',()=> el('imgModal').removeAttribute('open'));
 
-  // interactions
-  document.querySelectorAll('.chip').forEach(c => {
+  // interactions - clashes view
+  document.querySelectorAll('.chip[data-filter]').forEach(c => {
     c.addEventListener('click', () => {
-      document.querySelectorAll('.chip').forEach(x=>x.dataset.active='false');
+      document.querySelectorAll('.chip[data-filter]').forEach(x=>x.dataset.active='false');
       c.dataset.active='true';
       state.filter = c.dataset.filter;
       renderRows();
@@ -545,6 +1446,19 @@
   });
   el('search').addEventListener('input', e => { state.search = e.target.value.trim(); renderRows(); });
   el('sort').addEventListener('change', e => { state.sort = e.target.value; renderRows(); });
+  
+  // interactions - related items view
+  document.querySelectorAll('.chip[data-filter-related]').forEach(c => {
+    c.addEventListener('click', () => {
+      document.querySelectorAll('.chip[data-filter-related]').forEach(x=>x.dataset.active='false');
+      c.dataset.active='true';
+      state.relatedFilter = c.dataset.filterRelated;
+      renderRelatedItemsList();
+    });
+  });
+  el('search-related').addEventListener('input', e => { state.relatedSearch = e.target.value.trim(); renderRelatedItemsList(); });
+  el('sort-related').addEventListener('change', e => { state.relatedSort = e.target.value; renderRelatedItemsList(); });
+  
   el('btn-print').addEventListener('click', ()=> window.print());
 
   // File upload
@@ -553,7 +1467,7 @@
     const file = e.target.files?.[0];
     if (!file) return;
     const txt = await file.text();
-    loadJsonText(txt);
+    loadJsonText(txt, file.name);
   });
 
   // Drag & drop
@@ -563,30 +1477,39 @@
     const file = e.dataTransfer?.files?.[0];
     if(file){
       const txt = await file.text();
-      loadJsonText(txt);
+      loadJsonText(txt, file.name);
     }
   });
 
-  // Auto load attempt
-  el('btn-try-load').addEventListener('click', ()=> tryAutoLoad());
-  async function tryAutoLoad(){
-    try{
-      const res = await fetch('clashes_update_summary.json', {cache:'no-store'});
-      if(!res.ok) throw new Error('Not found');
-      const json = await res.text();
-      loadJsonText(json);
-    }catch(err){
-      alert('Could not auto‑load clashes_update_summary.json from the same folder.\n\nPlace it next to this HTML or upload it manually.');
+  // Auto-load data file on startup
+  async function autoLoadDataFile() {
+    try {
+      const response = await fetch(DEFAULT_DATA_FILE);
+      if (!response.ok) {
+        console.warn(`Could not load ${DEFAULT_DATA_FILE}: ${response.status}`);
+        return;
+      }
+      const text = await response.text();
+      loadJsonText(text, DEFAULT_DATA_FILE);
+      console.log(`Loaded data from ${DEFAULT_DATA_FILE}`);
+    } catch (error) {
+      console.warn(`Could not auto-load data file: ${error.message}`);
+      // Silent fail - user can manually upload file
     }
   }
+  
+  // Start auto-load
+  autoLoadDataFile();
 
   // Core loader
-  function loadJsonText(text){
+  function loadJsonText(text, filename = null){
     try{
       const data = JSON.parse(text);
       state.raw = data;
       updateStats();
       renderRows();
+      renderRelatedItemsView();
+      renderReportView();
       if ((data.clashes||[]).length){
         state.selectedIndex = 0;
         renderDetail(data.clashes[0]);
@@ -599,6 +1522,12 @@
       } else {
         el('stat-range').textContent = '—';
       }
+      
+      // Update subtitle with load info
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString();
+      const fileInfo = filename ? ` from ${filename}` : '';
+      el('subtitle').textContent = `Updates to clashes and related project information`;
     }catch(e){
       console.error(e);
       alert('Failed to parse JSON. Please check the file contents.');
